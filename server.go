@@ -8,23 +8,28 @@ import (
 	"github.com/go-redis/redis"
 )
 
-type server struct {
+type cache struct {
 	client *redis.Client
 }
 
-func newServer() *server {
-	var s server
+func newCache() *cache {
+	var s cache
 	s.client = redis.NewClient(&redis.Options{
 		Addr: "redis:6379",
 	})
 	return &s
 }
 
-func (server *server) handler(w http.ResponseWriter, r *http.Request) {
-	res, _ := server.client.Ping().Result()
+func (cache *cache) handler(w http.ResponseWriter, r *http.Request) {
+	res, _ := cache.client.Ping().Result()
 	io.WriteString(w, fmt.Sprintf("%s", res))
 }
 
 func main() {
+	cache := newCache()
+	server := http.Server{
+		Addr:    ":3000",
+		Handler: cache,
+	}
 
 }

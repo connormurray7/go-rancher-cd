@@ -20,7 +20,7 @@ func newCache() *cache {
 	return &s
 }
 
-func (cache *cache) ServerHTTP(w http.ResponseWriter, r *http.Request) {
+func (cache *cache) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	res, _ := cache.client.Ping().Result()
 	io.WriteString(w, fmt.Sprintf("%s", res))
 }

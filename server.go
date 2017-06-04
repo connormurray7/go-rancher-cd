@@ -28,8 +28,8 @@ func (cache *cache) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 
 func main() {
 	cache := newCache()
-	http.Handle(":3000", cache)
+	http.Handle("/", cache)
 
 	log.Println("Starting server ...")
-	http.ListenAndServe("127.0.0.1", nil)
+	http.ListenAndServe(":3000", nil)
 }

@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"io"
+	"log"
 	"net/http"
 
 	"github.com/go-redis/redis"
@@ -28,4 +29,7 @@ func (cache *cache) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 func main() {
 	cache := newCache()
 	http.Handle(":3000", cache)
+
+	log.Println("Starting server ...")
+	http.ListenAndServe("127.0.0.1", nil)
 }
